@@ -1,5 +1,33 @@
-# SQL queries on Netflix catalogue
-Looking at the Netflix catalogue database, reporting features for each show present, we want to retrieve and find peculiar patterns, such as geographic production, difference between movies and TV shows, contribution by multiple actors, genres and temporal evolution.
+# Netflix Catalog Analysis (SQL)
+### Is our shrinking attention span reshaping Netflix's content strategy?
+
+## Overview
+
+SQL-based analysis of Netflix's content catalog, exploring how the platform's
+production strategy has evolved over time, including a focus on the balance
+between TV shows (short episodes) and movies (longer format).
+
+The analysis is framed around a broader hypothesis: as audience attention
+spans shrink, streaming platforms may be adapting their catalogs toward
+shorter, more fragmented content.
+
+!-- Add reference to some findings to illustrate also the conclusion of the study -->
+
+## Database and Assumptions
+
+## Database Inspection and Schema Redesign
+
+## Key Challenges
+
+## Analysis
+
+### Content production across countries
+
+### Evolution of short vs. long contents
+
+## Key Findings
+
+## Limitations and Next Steps
 
 ## Point 0 - database inspection
 
