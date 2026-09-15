@@ -11,29 +11,60 @@ The analysis is framed around a broader hypothesis: as audience attention
 spans shrink, streaming platforms may be adapting their catalogs toward
 shorter, more fragmented content.
 
-!-- Add reference to some findings to illustrate also the conclusion of the study -->
+<!--
+Add reference to some findings to illustrate also the conclusion of the study
+-->
 
 ## Database and Assumptions
 
+<!-- 
+- [Link](https://www.kaggle.com/datasets/shivamb/netflix-shows) e provenienza dataset da Kaggle
+- "No real time data"
+- data about catalog and not effective viewership, the analysis reflects only Netflix offering, but assumes such can be in response to shifts in consumers behaviors
+- when comparing the trend of duration individually by Type (Movies and TV Shows), only Movies are accounted for: as for TV Shows, at first Season is not an objective measure of duration for the analysis in object, then, even surpassing this ambiguity, there are no indication regarding the fact that a TV Show in the catalog is ended or in progress, therefore the number of Season metric being unreliable
+-->
+
+The dataset is sourced from [Kaggle – Netflix Movies and TV Shows](https://www.kaggle.com/datasets/shivamb/netflix-shows)
+and represents a static snapshot, not real-time data.
+
+- **Catalog, not consumption**: the data describes Netflix's *offering*, not
+  actual viewership. The analysis assumes that catalog composition can
+  reflect shifts in consumer behavior, without claiming a causal relationship.
+- **Duration trend limited to Movies**: when comparing content duration over
+  time, only Movies are included. TV Shows are excluded from this specific
+  analysis for two reasons: season count is not an objective proxy for
+  duration (episode count and length vary widely across shows), and the
+  dataset provides no indication of whether a show is completed or still
+  ongoing (making season count unreliable even setting the first issue aside).
+
 ## Database Inspection and Schema Redesign
 
-## Key Challenges
+<!-- 
+- 8807 titles
+- difference between release year and date_added (to catalog)
+- time interval (date_added): 2014-2021
+- duration: minutes for Movies, Seasons for TV Shows
+- lists of items in the same cell for director, cast, country, listed_in: hard to apply counting operators
+-->
 
-## Analysis
+The original dataset consists of **8,807 titles**, with `date_added`
+(the date a title entered the catalog) ranging from **2014 to 2021** —
+distinct from `release_year`, which can inflate it significantly.
+`duration` is recorded in minutes for Movies and in seasons for TV Shows,
+requiring separate handling of the two content types throughout the analysis.
 
-### Content production across countries
+The main structural issue, however, is that several variables — `director`,
+`cast`, `country` and `listed_in` — store **multiple items within a single
+cell**. This prevents reliable use of aggregate functions (e.g. `COUNT`) and
+called for a re-modeling of the database.
 
-### Evolution of short vs. long contents
-
-## Key Findings
-
-## Limitations and Next Steps
-
-## Point 0 - database inspection
-
-A first major issue in the database as it is the listing of multiple items in the same cell, happening for the variables director, cast, country and listed_in. This does not allow to properly apply functions (f.i. COUNT) to the values, therefore requiring a re-modeling. In particular, in order to perform the fragmentation of such items operating on strings, the proposal refers to use Python to create one different database for each of those problematic variables, each duplicating the rows of a show_id for eventual multiple items of the variable. In this way, the original database is simplified and there are supportive databases for which the show_id is the key to the original one with important additional information (f.i. the title, which is, in opposite to show_id, not comfortable for calculation but essential for output interpretation).
-
-An example of the new tables is given here:
+The adopted solution uses Python to **split each of these variables into a
+dedicated supporting table**, duplicating rows by `show_id` for every
+additional item found. Each supporting table is keyed back to the original
+database via `show_id`: this keeps the core dataset lean and computation-friendly,
+while `show_id` (efficient for joins but uninformative on its own) is
+paired in the supporting tables with attributes like `title`, needed to make
+results interpretable. An example of the new relational scheme is given here:
 
 ```mermaid
 erDiagram
@@ -70,7 +101,53 @@ erDiagram
         string genre
     }
 ```
-It is worth to be noted that from a formal point of view the four new sub-tables are constituted by a compund primary key, incliuding both the show_id and the other reference variable.
+
+## Key Challenges
+
+- **Multiple data as same value in the table**
+- **NULL values in production and associated investigation**
+- **c**
+
+## Analysis
+
+### Content production across countries
+
+*Note: titles with a missing `country` value were checked individually to
+detect potential patterns (e.g. by genre) before deciding how to treat them.
+No meaningful pattern emerged — the missing values appear heterogeneous —
+so these titles were retained in the total count when computing Movies/TV
+Shows percentages by country.*
+
+Ranking countries by number of titles produced reveals a strongly
+concentrated catalog: the **United States** and **India** are the only two
+countries above a **10% share** of total titles, with all other producers
+trailing well behind.
+
+<!--
+insert ring chart + table of top countries
+-->
+
+Beyond volume, the balance between Movies and TV Shows varies significantly
+by country. Comparing each country's movie output against its TV show
+output highlights a distinct group of **TV-heavy producers**: Japan,
+Taiwan and South Korea stand out with a markedly low share of movies
+relative to TV shows — consistent with strong domestic TV/drama and anime
+industries — alongside a handful of countries (Ukraine, Azerbaijan, Cuba,
+Cyprus, Puerto Rico) showing the same pattern on a much smaller production
+volume, where the percentage is less statistically meaningful.
+
+<!--
+insert log-scale scatter + tables of top 10 e bottom 10 in terms of movie production percentage
+specify the log scale construction and eventual highlighted points/ how to interpret
+-->
+
+
+
+### Evolution of short vs. long contents
+
+## Key Findings
+
+## Limitations and Next Steps
 
 ## Point 1 - Content production across countries
 
