@@ -119,12 +119,30 @@ so these titles were retained in the total count when computing Movies/TV
 Shows percentages by country.*
 
 Ranking countries by number of titles produced reveals a strongly
-concentrated catalog: the **United States** is the only country to exceed a **10% share** of total titles, followed by **India** close to this threshold and all other producers
-trailing well behind.
+concentrated catalog: the **United States** and **India** are the only countries to exceed the threshold of **10% share** of total titles,while all other producers trailing well behind.
 
-<!--
-insert ring chart + table of top countries
--->
+<p align="center">
+  <img src="top_contribution_pct.png" width="500">
+</p>
+
+<div align="center">
+
+| country        | num_titles | contribution_pct |
+|----------------|--------|---------|
+| United States  | 3690   | 41.90   |
+| India          | 1046   | 11.88   |
+| Unknown        | 838    | 9.52    |
+| United Kingdom | 806    | 9.15    |
+| Canada         | 445    | 5.05    |
+| France         | 393    | 4.46    |
+| Japan          | 318    | 3.61    |
+| Spain          | 232    | 2.63    |
+| South Korea    | 231    | 2.62    |
+| Germany        | 226    | 2.57    |
+
+</div>
+
+<p align="center"><em>Top 10 countries by percentage contribution to catalog production</em></p>
 
 Beyond volume, the balance between Movies and TV Shows varies significantly
 by country. Comparing each country's movie output against its TV show
@@ -135,10 +153,35 @@ industries — alongside a handful of countries (Ukraine, Azerbaijan, Cuba,
 Cyprus, Puerto Rico) showing the same pattern on a much smaller production
 volume, where the percentage is less statistically meaningful.
 
-<!--
-insert log-scale scatter + tables of top 10 e bottom 10 in terms of movie production percentage
-specify the log scale construction and eventual highlighted points/ how to interpret
--->
+<p align="center">
+  <img src="movies_vs_shows_log.png" width="500">
+</p>
+
+<div align="center">
+
+<table>
+<tr>
+<th>country</th>
+<th>movies</th>
+<th>tv_shows</th>
+<th>total_titles</th>
+<th>pct_movies</th>
+</tr>
+<tr><td>United States</td><td>2752</td><td>938</td><td>3690</td><td>74.58</td></tr>
+<tr><td>India</td><td>962</td><td>84</td><td>1046</td><td>91.97</td></tr>
+<tr><td>Unknown</td><td>446</td><td>392</td><td>838</td><td>53.22</td></tr>
+<tr><td>United Kingdom</td><td>534</td><td>272</td><td>806</td><td>66.25</td></tr>
+<tr><td>Canada</td><td>319</td><td>126</td><td>445</td><td>71.69</td></tr>
+<tr><td>France</td><td>303</td><td>90</td><td>393</td><td>77.10</td></tr>
+<tr><td>Japan</td><td>119</td><td>199</td><td>318</td><td>37.42</td></tr>
+<tr><td>Spain</td><td>171</td><td>61</td><td>232</td><td>73.71</td></tr>
+<tr><td>South Korea</td><td>61</td><td>170</td><td>231</td><td>26.41</td></tr>
+<tr><td>Germany</td><td>182</td><td>44</td><td>226</td><td>80.53</td></tr>
+</table>
+
+</div>
+
+<p align="center"><em>Movies vs TV Shows production by country (Top 10 by total titles)</em></p>
 
 
 
