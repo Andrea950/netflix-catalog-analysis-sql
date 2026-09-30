@@ -119,8 +119,7 @@ so these titles were retained in the total count when computing Movies/TV
 Shows percentages by country.*
 
 Ranking countries by number of titles produced reveals a strongly
-concentrated catalog: the **United States** and **India** are the only two
-countries above a **10% share** of total titles, with all other producers
+concentrated catalog: the **United States** is the only country to exceed a **10% share** of total titles, followed by **India** close to this threshold and all other producers
 trailing well behind.
 
 <!--
