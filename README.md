@@ -3,17 +3,18 @@
 
 ## Overview
 
-SQL-based analysis of Netflix's content catalog, exploring how the platform's
-production strategy has evolved over time, including a focus on the balance
-between TV shows (short episodes) and movies (longer format).
+<img src="netflix_overview.png" width="170" align="left" style="margin-right: 20px" />
 
-The analysis is framed around a broader hypothesis: as audience attention
-spans shrink, streaming platforms may be adapting their catalogs toward
-shorter, more fragmented content.
+SQL-based analysis of Netflix's content catalog, exploring how the platform's production strategy has evolved over time, including a focus on the balance between TV shows (short episodes) and movies (longer format).
+
+The analysis is framed around a broader hypothesis: as audience attention spans shrink, streaming platforms may be adapting their catalogs toward shorter, more fragmented content.
 
 <!--
 Add reference to some findings to illustrate also the conclusion of the study
+Evaluate to add an image also, to put on the side of the overview as in the readme of the profile
 -->
+
+<br clear="left"/>
 
 ## Database and Assumptions
 
@@ -104,22 +105,17 @@ erDiagram
 
 ## Key Challenges
 
-- **Multiple data as same value in the table**
-- **NULL values in production and associated investigation**
-- **c**
+- **Multi-value attributes stored in single cells and the consequent need normalization**
+- **Missing values in `country` accounting for ~9.5% of the titles and handling as a separate category**
+- **Different units for `duration` field for Movies and TV Shows impose the structuring of a different analysis for the two subgroups.**
 
 ## Analysis
 
 ### Content production across countries
 
-*Note: titles with a missing `country` value were checked individually to
-detect potential patterns (e.g. by genre) before deciding how to treat them.
-No meaningful pattern emerged — the missing values appear heterogeneous —
-so these titles were retained in the total count when computing Movies/TV
-Shows percentages by country.*
+*Note: titles with a missing `country` value were checked individually to detect potential patterns (e.g. by genre) before deciding how to treat them. No meaningful pattern emerged — the missing values appear heterogeneous — so these titles were retained in the total count when computing Movies/TV Shows percentages by country and included in the `country` value Unknown.*
 
-Ranking countries by number of titles produced reveals a strongly
-concentrated catalog: the **United States** and **India** are the only countries to exceed the threshold of **10% share** of total titles,while all other producers trailing well behind.
+Ranking countries by number of titles produced reveals a strongly concentrated catalog: the **United States** and **India** are the only countries to exceed the threshold of **10% share** of total titles, while all other producers trail well behind.
 
 <p align="center">
   <img src="top_contribution_pct.png" width="500">
@@ -144,14 +140,11 @@ concentrated catalog: the **United States** and **India** are the only countries
 
 <p align="center"><em>Top 10 countries by percentage contribution to catalog production</em></p>
 
-Beyond volume, the balance between Movies and TV Shows varies significantly
-by country. Comparing each country's movie output against its TV show
-output highlights a distinct group of **TV-heavy producers**: Japan,
-Taiwan and South Korea stand out with a markedly low share of movies
-relative to TV shows — consistent with strong domestic TV/drama and anime
-industries — alongside a handful of countries (Ukraine, Azerbaijan, Cuba,
-Cyprus, Puerto Rico) showing the same pattern on a much smaller production
-volume, where the percentage is less statistically meaningful.
+It is worth noting that the choice of reporting extensively only the top 10 countries by total title production - for the part of the analysis that comes further, too - stems from the fact that their volume allows to interpret more consistently their Movies and TV Shows production and consequently the percentage of Movies metric. Complementarily, the log-scale scatterplot including all countries is offered to provide a more global point of view, even if as production volume decreases the values are more unreliable.
+
+Beyond volume, the balance between Movies and TV Shows varies significantly across these countries. Comparing each country's Movie output against its TV Show output highlights a distinct group of **TV-heavy producers**: Japan, South Korea stand out with a markedly low share of movies relative to TV shows — consistent with strong domestic TV/drama and anime industries — alongside a handful of countries showing the same pattern on a much smaller production volume and therefore less statistically meaningful.
+
+Conversely, the United States, India and other countries not present in the top 10 by total titles produced (e.g. Hong Kong, Indonesia, Philippines and United Arab Emirates) prove to be more **Movie-heavy producers**.
 
 <p align="center">
   <img src="movies_vs_shows_log.png" width="500">
@@ -183,24 +176,24 @@ volume, where the percentage is less statistically meaningful.
 
 <p align="center"><em>Movies vs TV Shows production by country (Top 10 by total titles)</em></p>
 
+An interesting point emerging from this breakdown is that the Movies/TV Shows mix seems to reflect mostly the structure of the local industries (e.g. Asian countries and anime/shows culture). This factor can plausibly be taken into account in the analysis, differentiating geographical preferences from behavioral ones like attention span, which is the subject of this analysis.
 
+An interesting point emerging from this breakdown is that the Movies/TV Shows mix plausibly reflects the structure of local industries (e.g. anime and drama production in Japan and South Korea) rather than viewers' preferences alone. This matters for the analysis that follows: a shift in the geographic composition of the catalog could alter the aggregate mix over time even with no change in attention-related behavior (a composition effect). Since the temporal analysis is run on the aggregate catalog, this effect is not controlled for and is acknowledged as a limitation (see Limitations & Next Steps).
 
 ### Evolution of short vs. long contents
+
+first point: declare how to distinguish the analysis for tv shows and movies
+
+second point: tv-shows and movies - absolute and relative evolution year by year in the catalog expansion
+
+third point: movies specific for the different granularity - study the average duration year by year
+
+let's go, not so hard!!!!
 
 ## Key Findings
 
 ## Limitations and Next Steps
 
-## Point 1 - Content production across countries
-
-### Which countries produce more contents? 
-- Now that we start writing queries, please not that the presence of NULL values in the original database is accounted for in those queries by including a WHERE and IS NOT NULL clause)
-- Additionally, for clearer reporting purposes, a new column is added to the output based on the result to communicate if we're facing a single-country or multi-country production - see the result, we could simpler and better set low-medium-high based on interval (if more than 95% of the countries are multi the first classification is not so informative; could even download the result, plot the distribution and define the thresholds accordingly
-
-### Does the result changes if we carry out a different process for Movies and TV shows?
-
-### Production map
-Using the two tables from the previous point could plot in Python a matrix in which plot each country according to production in Movies and TV shows, and optimisticallyt cluster them for the final insight
 
 ## Point 2 - Temporal evolution of short vs long contents
 There are several studies that indicates how with years passing and evolution of the pace of life, digitalization and social media the attention threshold of people has decreased.
@@ -208,11 +201,6 @@ There are several studies that indicates how with years passing and evolution of
 - Interesting to inspect if the production release schedule of Netflix over years is coherent with such a trend, and in general understand if one type of content is preferred/more easily produced and so on (# of movies and TV shows for release year, or #titles released each year (absolute) + % movies over the total to be more synthetic)
 
 - Focusing on Movies only (assumptions that you do not know if the number of seasons of a TV shows is ended or in process, so not reliable measure of duration), repeat the analysis by finding for each year aggregated measures related to duration
-
-## Point 3 - Genres representation
-
-- similar to country analysis, you can intersect the result with the type (movie or tv-shows): objective of understanding tendencies
-
 
 
   
