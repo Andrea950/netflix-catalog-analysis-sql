@@ -3,7 +3,7 @@
 
 ## Overview
 
-<img src="netflix_overview.png" width="170" align="left" style="margin-right: 20px" />
+<img src="netflix_overview.jpeg" width="200" align="left" style="margin-right: 20px" />
 
 SQL-based analysis of Netflix's content catalog, exploring how the platform's production strategy has evolved over time, including a focus on the balance between TV shows (short episodes) and movies (longer format).
 
@@ -105,9 +105,10 @@ erDiagram
 
 ## Key Challenges
 
-- **Multi-value attributes stored in single cells and the consequent need normalization**
-- **Missing values in `country` accounting for ~9.5% of the titles and handling as a separate category**
 - **Different units for `duration` field for Movies and TV Shows impose the structuring of a different analysis for the two subgroups.**
+- **Missing values in `country` accounting for ~9.5% of the titles and handling as a separate category**
+- **Multi-value attributes stored in single cells and the consequent need normalization**
+
 
 ## Analysis
 
@@ -146,8 +147,10 @@ Beyond volume, the balance between Movies and TV Shows varies significantly acro
 
 Conversely, the United States, India and other countries not present in the top 10 by total titles produced (e.g. Hong Kong, Indonesia, Philippines and United Arab Emirates) prove to be more **Movie-heavy producers**.
 
+ADD PERCENTAGES AND DATA referred to the table!
+
 <p align="center">
-  <img src="movies_vs_shows_log.png" width="500">
+  <img src="scatter.png" width="500">
 </p>
 
 <div align="center">
